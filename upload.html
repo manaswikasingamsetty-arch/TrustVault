@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document | TrustVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f3f5fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .upload-card {
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            padding: 32px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #252b50;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 18px 0 8px;
+            color: #252b50;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd1df;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #252b50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #394477;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #252b50;
+            text-decoration: none;
+        }
+
+        .errorlist {
+            color: #c62828;
+            font-size: 14px;
+        }
+
+        .help {
+            color: #666;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="upload-card">
+        <h1>Upload Document</h1>
+        <p class="subtitle">Keep your files in your TrustVault.</p>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                {{ form.non_field_errors }}
+            {% endif %}
+
+            <label for="{{ form.title.id_for_label }}">
+                Document Name
+            </label>
+            {{ form.title }}
+            {{ form.title.errors }}
+
+            <label for="{{ form.file.id_for_label }}">
+                Choose PDF or Image
+            </label>
+            {{ form.file }}
+            {{ form.file.errors }}
+
+            <p class="help">
+                Allowed: PDF, JPG, JPEG, PNG. Maximum size: 5 MB.
+            </p>
+
+            <button type="submit">Upload Document</button>
+        </form>
+
+        <a class="back-link" href="{% url 'dashboard' %}">
+            Back to Dashboard
+        </a>
+    </div>
+</body>
+</html>

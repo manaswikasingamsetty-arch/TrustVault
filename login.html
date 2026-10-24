@@ -1,0 +1,276 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TrustVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff0f5, #f4f5ff);
+            color: #18213d;
+        }
+
+        .login-box {
+            width: 90%;
+            max-width: 420px;
+            padding: 35px;
+            background: white;
+            border-radius: 22px;
+            box-shadow: 0 12px 40px rgba(35, 30, 70, 0.12);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: #252b50;
+        }
+
+        .shield {
+            text-align: center;
+            font-size: 45px;
+            margin: 15px 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777b90;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dedfea;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+        }
+
+        input:focus {
+            outline: 2px solid #e9a6c1;
+            border-color: #e9a6c1;
+        }
+
+        /* Password field and eye button */
+        .password-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-box input {
+            padding-right: 48px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            width: auto;
+            margin: 0;
+            padding: 5px;
+            border: none;
+            background: transparent;
+            color: #252b50;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .toggle-password:hover {
+            background: transparent;
+        }
+
+        .toggle-password:focus-visible {
+            outline: 2px solid #e9a6c1;
+            border-radius: 5px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 22px;
+            border: none;
+            border-radius: 10px;
+            background: #252b50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background: #414a79;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            background: #fff0f3;
+            color: #a32c53;
+            font-size: 14px;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #b94f7b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #777b90;
+        }
+
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 25px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box">
+
+        <div class="logo">🛡️ TrustVault</div>
+        <div class="shield">🔐</div>
+
+        <h2>Welcome Back!</h2>
+
+        <p class="subtitle">
+            Login to access your secure documents.
+        </p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="username">Username</label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Password</label>
+
+            <div class="password-box">
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    id="eyeIcon"
+                    aria-label="Show password"
+                    aria-controls="password"
+                    aria-pressed="false"
+                >👁️</button>
+            </div>
+
+            <button type="submit" class="login-button">
+                Login Securely
+            </button>
+
+        </form>
+
+        <div class="links">
+            Don't have an account?
+            <a href="{% url 'register' %}">Register</a>
+        </div>
+
+        <a class="back" href="{% url 'home' %}">
+            ← Back to Home
+        </a>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const passwordInput = document.getElementById("password");
+            const eyeButton = document.getElementById("eyeIcon");
+
+            if (!passwordInput || !eyeButton) {
+                return;
+            }
+
+            eyeButton.addEventListener("click", function () {
+                const isHidden = passwordInput.type === "password";
+
+                if (isHidden) {
+                    passwordInput.type = "text";
+                    eyeButton.textContent = "🙈";
+                    eyeButton.setAttribute(
+                        "aria-label",
+                        "Hide password"
+                    );
+                    eyeButton.setAttribute("aria-pressed", "true");
+                } else {
+                    passwordInput.type = "password";
+                    eyeButton.textContent = "👁️";
+                    eyeButton.setAttribute(
+                        "aria-label",
+                        "Show password"
+                    );
+                    eyeButton.setAttribute("aria-pressed", "false");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+```

@@ -1,0 +1,192 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | TrustVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff0f5, #f4f5ff);
+            color: #18213d;
+        }
+
+        .register-box {
+            width: 90%;
+            max-width: 450px;
+            padding: 35px;
+            background: white;
+            border-radius: 22px;
+            box-shadow: 0 12px 40px rgba(35, 30, 70, 0.12);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .shield {
+            text-align: center;
+            font-size: 42px;
+            margin: 15px 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777b90;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dedfea;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: 2px solid #e9a6c1;
+            border-color: #e9a6c1;
+        }
+
+        /* Password eye symbol */
+        .password-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-box input {
+            padding-right: 45px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 13px;
+            cursor: pointer;
+            font-size: 19px;
+            user-select: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 22px;
+            border: none;
+            border-radius: 10px;
+            background: #252b50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #414a79;
+        }
+
+        .errorlist {
+            color: #b4234d;
+            font-size: 13px;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #b94f7b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #777b90;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-box">
+        <div class="logo">🛡️ TrustVault</div>
+        <div class="shield">✨</div>
+
+        <h2>Create Your Account</h2>
+        <p class="subtitle">Start managing your documents securely.</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {% if field.field.widget.input_type == "password" %}
+                    <div class="password-box">
+                        {{ field }}
+
+                        <span
+                            class="toggle-password"
+                            onclick="togglePassword('{{ field.id_for_label }}', this)"
+                            role="button"
+                            tabindex="0"
+                            aria-label="Show password"
+                        >👁️</span>
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+
+                {% if field.errors %}
+                    <div class="errorlist">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+
+                {% if field.help_text %}
+                    <div style="font-size: 12px; color: #777b90; margin-top: 5px;">
+                        {{ field.help_text|safe }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <div class="links">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+
+        <a class="back

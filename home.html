@@ -1,0 +1,942 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustVault | Your Files, Your Trust</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #ffffff;
+            color: #17213d;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --navy: #101b3c;
+            --pink: #f3a6c8;
+            --pink-light: #fff0f7;
+            --purple: #a58bfa;
+            --muted: #69738a;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            width: 100%;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid #f1e8ef;
+            position: relative;
+            z-index: 5;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 25px;
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -1px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 39px;
+            height: 39px;
+            background: linear-gradient(135deg, #f5b2d0, #c4b4ff);
+            color: var(--navy);
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #515c73;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #d879aa;
+        }
+
+        .nav-auth {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-login {
+            border: 1px solid #eadfe9;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .nav-register {
+            background: #101b3c;
+            color: white !important;
+            padding: 10px 16px;
+            border-radius: 10px;
+        }
+
+        .nav-register:hover {
+            background: #d879aa;
+            color: white !important;
+        }
+
+        /* HERO SECTION */
+
+        .hero {
+            min-height: 620px;
+            padding: 80px 8% 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 55px;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 85% 35%,
+                    #ffe5f1 0%, transparent 36%),
+                radial-gradient(ellipse at 15% 80%,
+                    #f1edff 0%, transparent 35%),
+                #ffffff;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 1px solid #f2c4dc;
+            border-radius: 50%;
+            right: 9%;
+            top: 17%;
+            z-index: -1;
+            animation: orbit 18s linear infinite;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 270px;
+            height: 270px;
+            border: 1px dashed #d9caff;
+            border-radius: 50%;
+            right: 12%;
+            top: 24%;
+            z-index: -1;
+            animation: orbit 24s linear infinite reverse;
+        }
+
+        .hero-content {
+            max-width: 590px;
+            animation: appear 1s ease both;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: #fff0f7;
+            border: 1px solid #f8d4e5;
+            color: #a64c7c;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 27px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #d879aa;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #e9a4c8;
+        }
+
+        h1 {
+            font-size: clamp(43px, 5.5vw, 72px);
+            line-height: 1.08;
+            letter-spacing: -3px;
+            color: var(--navy);
+            margin-bottom: 25px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(100deg, #d879aa, #9b82ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-content p {
+            color: var(--muted);
+            line-height: 1.9;
+            font-size: 16px;
+            max-width: 490px;
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 15px 23px;
+            border-radius: 13px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .button:hover {
+            transform: translateY(-4px);
+        }
+
+        .primary {
+            background: var(--navy);
+            color: white;
+            box-shadow: 0 10px 25px #101b3c20;
+        }
+
+        .primary:hover {
+            box-shadow: 0 14px 30px #101b3c35;
+        }
+
+        .secondary {
+            background: white;
+            border: 1px solid #eadfe9;
+            color: var(--navy);
+        }
+
+        .trust-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 32px;
+            font-size: 12px;
+            color: #778096;
+        }
+
+        .trust-note strong {
+            color: var(--navy);
+        }
+
+        /* GLOWING SHIELD */
+
+        .hero-visual {
+            width: 390px;
+            height: 390px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            position: relative;
+            animation: appear 1.2s ease both;
+        }
+
+        .shield-glow {
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            background: #f3b3d5;
+            border-radius: 50%;
+            filter: blur(75px);
+            opacity: 0.65;
+            animation: glow 4s ease-in-out infinite alternate;
+        }
+
+        .shield-ring {
+            position: absolute;
+            width: 310px;
+            height: 310px;
+            border-radius: 50%;
+            border: 1px solid #ecc5df;
+            box-shadow: 0 0 45px #f5c7df50;
+        }
+
+        .shield-ring.inner {
+            width: 260px;
+            height: 260px;
+            border-style: dashed;
+            border-color: #d8c9f8;
+            animation: orbit 30s linear infinite;
+        }
+
+        .shield {
+            width: 160px;
+            height: 185px;
+            display: grid;
+            place-items: center;
+            clip-path: polygon(50% 0%, 91% 17%, 86% 66%,
+                70% 84%, 50% 100%, 30% 84%, 14% 66%, 9% 17%);
+            background: linear-gradient(145deg, #fff8fc, #efc2df 50%, #a9a0f6);
+            filter: drop-shadow(0 15px 35px #c28bcf70);
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .shield-inner {
+            width: 140px;
+            height: 165px;
+            display: grid;
+            place-items: center;
+            clip-path: polygon(50% 0%, 91% 17%, 86% 66%,
+                70% 84%, 50% 100%, 30% 84%, 14% 66%, 9% 17%);
+            background: linear-gradient(145deg, #192950, #293b69);
+            color: white;
+            font-size: 56px;
+            text-shadow: 0 0 25px #f7a6d3;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: rgba(255,255,255,0.94);
+            border: 1px solid #f2e5f0;
+            border-radius: 15px;
+            padding: 13px 16px;
+            box-shadow: 0 15px 45px #2c214010;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .floating-card.one {
+            top: 55px;
+            right: -5px;
+        }
+
+        .floating-card.two {
+            bottom: 57px;
+            left: -10px;
+            animation-delay: -2s;
+        }
+
+        .mini-icon {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: #fff0f7;
+            font-size: 18px;
+        }
+
+        .floating-card strong {
+            display: block;
+            font-size: 12px;
+            color: var(--navy);
+        }
+
+        .floating-card small {
+            color: #8991a5;
+            font-size: 10px;
+        }
+
+        /* FEATURE SECTION */
+
+        .features {
+            padding: 85px 8%;
+            background: #fcfaff;
+            border-top: 1px solid #f4edf7;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 620px;
+            margin: 0 auto 45px;
+        }
+
+        .section-heading span {
+            color: #cb76a4;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 11px;
+        }
+
+        .section-heading h2 {
+            margin: 13px 0;
+            color: var(--navy);
+            font-size: clamp(30px, 4vw, 43px);
+            letter-spacing: -1.5px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px 27px;
+            border: 1px solid #eee7f1;
+            border-radius: 21px;
+            box-shadow: 0 10px 35px #29214405;
+            transition: transform 0.35s, box-shadow 0.35s,
+                border-color 0.35s;
+            animation: appear 0.8s ease both;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px #29214410;
+            border-color: #efc5df;
+        }
+
+        .feature-icon {
+            width: 53px;
+            height: 53px;
+            display: grid;
+            place-items: center;
+            font-size: 25px;
+            background: linear-gradient(135deg, #fff0f7, #f1edff);
+            border-radius: 16px;
+            margin-bottom: 22px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        .learn-more {
+            display: inline-block;
+            margin-top: 21px;
+            color: #bf6798;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        /* TRUST BANNER */
+
+        .trust-banner {
+            margin: 70px 8%;
+            padding: 45px;
+            border-radius: 25px;
+            background: linear-gradient(120deg, #101b3c, #25345e);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-banner::after {
+            content: "";
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            right: 15%;
+            top: -130px;
+            border: 1px solid #ffffff20;
+            border-radius: 50%;
+            box-shadow: 0 0 0 30px #ffffff05,
+                0 0 0 60px #ffffff05;
+        }
+
+        .trust-banner h2 {
+            font-size: clamp(24px, 3vw, 34px);
+            margin-bottom: 12px;
+        }
+
+        .trust-banner p {
+            color: #d0d7ea;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .trust-banner .button {
+            background: linear-gradient(110deg, #f2b1d1, #d8c5ff);
+            color: #17213d;
+            white-space: nowrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid #f0e8f1;
+            padding: 28px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            color: #858ca0;
+            font-size: 12px;
+        }
+
+        footer strong {
+            color: var(--navy);
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                opacity: 0.35;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 0.8;
+                transform: scale(1.12);
+            }
+        }
+
+        @keyframes orbit {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+/* SMOOTH MOVEMENT ANIMATIONS */
+
+/* Navbar buttons */
+.nav-login,
+.nav-register {
+    transition: all 0.35s ease;
+}
+
+.nav-login:hover {
+    transform: translateY(-4px);
+    border-color: #d879aa;
+    box-shadow: 0 8px 20px #d879aa30;
+}
+
+.nav-register:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 8px 22px #101b3c30;
+}
+
+/* Smooth feature card movement */
+.feature-card {
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 22px 45px #a58bfa25;
+    border-color: #e8b5d5;
+}
+
+/* Hero buttons */
+.hero-buttons .button {
+    transition: all 0.35s ease;
+}
+
+.hero-buttons .button:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px #101b3c20;
+}
+
+/* Slowly moving background glow */
+.hero {
+    background-size: 150% 150%;
+    animation: backgroundFlow 12s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundFlow {
+    0% {
+        background-position: 0% 40%;
+    }
+    100% {
+        background-position: 100% 60%;
+    }
+}
+
+/* Floating security cards */
+.floating-card {
+    transition: box-shadow 0.35s ease;
+}
+
+.floating-card:hover {
+    box-shadow: 0 20px 50px #a58bfa35;
+}
+
+/* Trust banner button */
+.trust-banner .button {
+    transition: transform 0.35s ease,
+                box-shadow 0.35s ease;
+}
+
+.trust-banner .button:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 10px 25px #f3a6c850;
+}
+
+
+        /* MOBILE DESIGN */
+
+        @media (max-width: 850px) {
+            nav {
+                padding: 18px 5%;
+            }
+
+            .nav-links {
+                gap: 13px;
+            }
+
+            .nav-links > a {
+                display: none;
+            }
+
+            .nav-auth {
+                gap: 7px;
+            }
+
+            .nav-login,
+            .nav-register {
+                padding: 9px 12px;
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 21px;
+                gap: 7px;
+            }
+
+            .logo-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .hero {
+                padding: 65px 6%;
+                flex-direction: column;
+                text-align: center;
+                gap: 35px;
+            }
+
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons,
+            .trust-note {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                width: min(350px, 100%);
+                height: 350px;
+            }
+
+            .shield-ring {
+                width: 280px;
+                height: 280px;
+            }
+
+            .shield-ring.inner {
+                width: 235px;
+                height: 235px;
+            }
+
+            .floating-card.one {
+                right: -2px;
+            }
+
+            .floating-card.two {
+                left: -2px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                padding: 65px 6%;
+            }
+
+            .trust-banner {
+                margin: 45px 6%;
+                padding: 32px 25px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            footer {
+                padding: 25px 6%;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <a href="#home" class="logo">
+            <div class="logo-icon">♡</div>
+            Trust<span style="margin-left:-10px;color:#17213d;">Vault</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#security">Security</a>
+
+            <div class="nav-auth">
+                <a href="{% url 'login' %}" class="nav-login">Login</a>
+                <a href="{% url 'register' %}" class="nav-register">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                <span class="live-dot"></span>
+                YOUR PRIVACY. YOUR CONTROL.
+            </div>
+
+            <h1>
+                Your files.<br>
+                Your trust.<br>
+                <span class="gradient-text">Our priority.</span>
+            </h1>
+
+            <p>
+                A smarter way to manage and share documents.
+                Keep your important files organized, control who
+                can access them, and maintain a clear activity trail.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#features" class="button primary">
+                    Discover TrustVault &nbsp; →
+                </a>
+
+                <a href="#security" class="button secondary">
+                    ✧ &nbsp; Explore Security
+                </a>
+            </div>
+
+            <div class="trust-note">
+                <span>✦</span>
+                <span>
+                    <strong>Privacy matters.</strong>
+                    Every document deserves care.
+                </span>
+            </div>
+
+        </div>
+
+        <div class="hero-visual">
+
+            <div class="shield-glow"></div>
+            <div class="shield-ring"></div>
+            <div class="shield-ring inner"></div>
+
+            <div class="shield">
+                <div class="shield-inner">♙</div>
+            </div>
+
+            <div class="floating-card one">
+                <div class="mini-icon">🔒</div>
+                <div>
+                    <strong>Privacy First</strong>
+                    <small>Your files, your control</small>
+                </div>
+            </div>
+
+            <div class="floating-card two">
+                <div class="mini-icon">✓</div>
+                <div>
+                    <strong>Access Control</strong>
+                    <small>Permissions matter</small>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features" id="features">
+
+        <div class="section-heading">
+            <span>Thoughtfully designed</span>
+            <h2>Security meets simplicity.</h2>
+            <p>
+                Everything you need to manage documents with
+                confidence, clarity, and control.
+            </p>
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <div class="feature-icon">📁</div>
+                <h3>Secure Documents</h3>
+                <p>
+                    Keep your important documents organized in one
+                    place, with access restricted to authorized users.
+                </p>
+                <a href="#security" class="learn-more">
+                    Explore documents →
+                </a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Smart File Control</h3>
+                <p>
+                    Give specific users permission to read or edit
+                    documents, and revoke access when needed.
+                </p>
+                <a href="#security" class="learn-more">
+                    Explore permissions →
+                </a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">✧</div>
+                <h3>Activity &amp; Audit Trail</h3>
+                <p>
+                    Maintain a record of document activities and
+                    permission changes for greater accountability.
+                </p>
+                <a href="#security" class="learn-more">
+                    Explore activity logs →
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TRUST BANNER -->
+    <section class="trust-banner" id="security">
+
+        <div>
+            <h2>Trust isn't a feature.<br>It's the foundation.</h2>
+            <p>
+                A document-sharing experience built around
+                responsible access and transparency.
+            </p>
+        </div>
+
+        <a href="#home" class="button">
+            Back to top ↑
+        </a>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="logo" style="font-size:19px;">
+            <div class="logo-icon"
+                 style="width:31px;height:31px;font-size:17px;">♡</div>
+            Trust<span style="margin-left:-10px;color:#17213d;">Vault</span>
+        </div>
+
+        <div>Designed with care ♡ &nbsp; © 2026 TrustVault</div>
+
+        <div>Privacy · Control · Trust</div>
+
+    </footer>
+
+</body>
+</html>
